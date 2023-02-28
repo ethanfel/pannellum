@@ -1,60 +1,56 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-    <title>pannellum embed example</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body style="background-image: url(../../selected/crop/crop_0001.jpg); background-size: 2048px 2048px;">
-
- <body>
+<body>
+  <div>
+    <label for="start">Starting Image Number:</label>
+    <input type="number" id="start" name="start" min="1">
+    <button id="submit">Submit</button>
+  </div>
+  
   <script>
-    // Prompt the user for the value of i
-    let i = prompt("Enter a value for i:");
+    let startInput = document.getElementById("start");
+    let submitButton = document.getElementById("submit");
 
-    // Convert i to a number
-    i = parseInt(i);
+    submitButton.addEventListener("click", function() {
+      let start = parseInt(startInput.value);
+      
+      for (let i = start; i < start + 50; i++) {
+        let panoramaImage = `../../selected/${('0000' + i).slice(-4)}.jpg`;
+        let previewImage = `../../selected/crop/crop_${('0000' + i).slice(-4)}.jpg`;
+        let id = `preview_${i}`;
 
-    // Create a loop to display i+50 images
-    for (let j = i; j < i+50; j++) {
-      let panoramaImage = `../../selected/${('0000' + j).slice(-4)}.jpg`;
-      let previewImage = `../../selected/crop/crop_${('0000' + j).slice(-4)}.jpg`;
-      let id = `preview_${j}`;
-
-      let container = document.createElement('div');
-      container.classList.add('container');
-      document.body.appendChild(container);
-      
-      let iframe = document.createElement('iframe');
-      iframe.id = id;
-      iframe.src = `../src/standalone/pannellum.htm?panorama=${panoramaImage}&preview=${previewImage}`;
-      iframe.allowFullscreen = true;
-      container.appendChild(iframe);
-      
-      let button = document.createElement('button');
-      button.id = id + '_button';
-      button.innerHTML = `Image ${j+1}`;
-      container.appendChild(button);
-      
-      let isRed = (localStorage.getItem(id + '_state') !== 'green');
-      if (!isRed) {
-        iframe.style.border = '2px solid green';
-        button.style.backgroundColor = 'green';
-      }
-      
-      button.addEventListener('click', function() {
-        if (isRed) {
+        let container = document.createElement('div');
+        container.classList.add('container');
+        document.body.appendChild(container);
+        
+        let iframe = document.createElement('iframe');
+        iframe.id = id;
+        iframe.src = `../src/standalone/pannellum.htm?panorama=${panoramaImage}&preview=${previewImage}`;
+        iframe.allowFullscreen = true;
+        container.appendChild(iframe);
+        
+        let button = document.createElement('button');
+        button.id = id + '_button';
+        button.innerHTML = `Image ${i+1}`;
+        container.appendChild(button);
+        
+        let isRed = (localStorage.getItem(id + '_state') !== 'green');
+        if (!isRed) {
           iframe.style.border = '2px solid green';
           button.style.backgroundColor = 'green';
-          localStorage.setItem(id + '_state', 'green');
-        } else {
-          iframe.style.border = '2px solid red';
-          button.style.backgroundColor = 'red';
-          localStorage.setItem(id + '_state', 'red');
         }
-        isRed = !isRed;
-      });
-    }
+        
+        button.addEventListener('click', function() {
+          if (isRed) {
+            iframe.style.border = '2px solid green';
+            button.style.backgroundColor = 'green';
+            localStorage.setItem(id + '_state', 'green');
+          } else {
+            iframe.style.border = '2px solid red';
+            button.style.backgroundColor = 'red';
+            localStorage.setItem(id + '_state', 'red');
+          }
+          isRed = !isRed;
+        });
+      }
+    });
   </script>
 </body>
-
-</html>
