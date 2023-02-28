@@ -1,91 +1,75 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <title>pannellum embed example</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>pannellum embed example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body style="background-image: url(../../selected/crop/crop_0001.jpg); background-size: 2048px 2048px;">
   <style>
-    #container {
+    .container {
       display: flex;
-      flex-wrap: wrap;
+      width: 100%;
+      height: 52vh;
       justify-content: center;
       align-items: center;
     }
 
-    .image-container {
+    iframe {
       width: 512px;
       height: 512px;
-      margin: 10px;
       border: 2px solid red;
-      background-size: cover;
-      background-position: center;
     }
 
-    .button {
+    button {
       width: 40px;
       height: 516px;
       background-color: red;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .button.green {
-      background-color: green;
     }
   </style>
-</head>
-<body>
-  <div id="container"></div>
 
   <script>
-    const container = document.getElementById('container');
+    for (let i = 1; i <= 200; i++) {
+      let panoramaImage = '../../selected/' + ('0000' + i).slice(-4) + '.jpg';
+      let previewImage = '../../selected/crop/' + 'crop_' + ('0000' + i).slice(-4) + '.jpg';
+      let id = 'preview_' + i;
 
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const index = parseInt(entry.target.className.match(/\d+/)[0]);
-          loadImages(index + 1, index + 10);
+      let container = document.createElement('div');
+      container.classList.add('container');
+      document.body.appendChild(container);
+      
+      let iframe = document.createElement('iframe');
+      iframe.id = id;
+      iframe.src = `../src/standalone/pannellum.htm?panorama=${panoramaImage}&preview=${previewImage}`;
+      iframe.allowFullscreen = true;
+      container.appendChild(iframe);
+      
+      let button = document.createElement('button');
+      button.id = id + '_button';
+      button.innerHTML = 'Image ' + (i + 1);
+      container.appendChild(button);
+      
+      let isRed = (localStorage.getItem(id + '_state') !== 'green');
+      if (!isRed) {
+        iframe.style.border = '2px solid green';
+        button.style.backgroundColor = 'green';
+      }
+      
+      button.addEventListener('click', function() {
+        if (isRed) {
+          iframe.style.border = '2px solid green';
+          button.style.backgroundColor = 'green';
+          localStorage.setItem(id + '_state', 'green');
+        } else {
+          iframe.style.border = '2px solid red';
+          button.style.backgroundColor = 'red';
+          localStorage.setItem(id + '_state', 'red');
         }
+        isRed = !isRed;
       });
-    });
-
-    observer.observe(container.lastElementChild);
-
-    function loadImages(startIndex, endIndex) {
-      for (let i = startIndex - 10; i < startIndex; i++) {
-        const imageContainer = document.querySelector(`.image-container-${i}`);
-        if (imageContainer) {
-          container.removeChild(imageContainer);
-        }
-      }
-
-      for (let i = startIndex; i <= endIndex; i++) {
-        const imageContainer = document.createElement('div');
-        imageContainer.classList.add(`image-container`, `image-container-${i}`);
-        const panoramaImage = `../../selected/${('0000' + i).slice(-4)}.jpg`;
-        const previewImage = `../../selected/crop/crop_${('0000' + i).slice(-4)}.jpg`;
-        imageContainer.style.backgroundImage = `url(${previewImage})`;
-        const button = document.createElement('div');
-        button.classList.add(`button`, `button-${i}`);
-        button.innerHTML = `Image ${i + 1}`;
-        button.addEventListener('click', function() {
-          const isRed = imageContainer.style.borderColor === 'red';
-          if (isRed) {
-            imageContainer.style.borderColor = 'green';
-            button.classList.add('green');
-          } else {
-            imageContainer.style.borderColor = 'red';
-            button.classList.remove('green');
-          }
-        });
-        imageContainer.appendChild(button);
-        container.appendChild(imageContainer);
-      }
     }
   </script>
 </body>
+
+
+
 </html>
