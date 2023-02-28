@@ -4,7 +4,17 @@
     <title>pannellum embed example</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-<<body style="background-image: url(../../selected/crop/crop_0001.jpg); background-size: 2048px 2048px;">
+<body style="background-image: url(../../selected/crop/crop_0001.jpg); background-size: 2048px 2048px;">
+
+  <!-- Add buttons for each range of images -->
+  <div>
+    <button onclick="window.location.href='vr_screenshot.htm'">1-50</button>
+    <button onclick="window.location.href='vr_screenshot51.htm'">51-100</button>
+    <button onclick="window.location.href='vr_screenshot101.htm'">101-150</button>
+    <!-- Add more buttons for each range of images until 500 -->
+    <button onclick="window.location.href='vr_screenshot451.htm'">451-500</button>
+  </div>
+
   <style>
     .container {
       display: flex;
@@ -20,103 +30,53 @@
       border: 2px solid red;
     }
 
-    button.page {
-      width: 80px;
-      height: 30px;
-      font-size: 14px;
+    button {
+      width: 40px;
+      height: 516px;
       background-color: red;
-      color: white;
-      margin-right: 10px;
-    }
-    
-    .page-buttons {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 10px;
     }
   </style>
 
   <script>
-    // create a loop for each page
-    for (let page = 1; page <= 3; page++) {
-      let start = (page - 1) * 50 + 1;
-      let end = page * 50;
-      
-      // create a container for each page
-      let pageContainer = document.createElement('div');
-      pageContainer.id = 'page_' + page;
-      document.body.appendChild(pageContainer);
-      
-      // create iframes for each image in the page
-      for (let i = start; i <= end; i++) {
-        let panoramaImage = '../../selected/' + ('0000' + i).slice(-4) + '.jpg';
-        let previewImage = '../../selected/crop/' + 'crop_' + ('0000' + i).slice(-4) + '.jpg';
-        let id = 'preview_' + i;
+    for (let i = 1; i <= 50; i++) {
+      let panoramaImage = '../../selected/' + ('0000' + i).slice(-4) + '.jpg';
+      let previewImage = '../../selected/crop/' + 'crop_' + ('0000' + i).slice(-4) + '.jpg';
+      let id = 'preview_' + i;
 
-        let container = document.createElement('div');
-        container.classList.add('container');
-        pageContainer.appendChild(container);
-        
-        let iframe = document.createElement('iframe');
-        iframe.id = id;
-        iframe.src = `../src/standalone/pannellum.htm?panorama=${panoramaImage}&preview=${previewImage}`;
-        iframe.allowFullscreen = true;
-        container.appendChild(iframe);
-        
-        let button = document.createElement('button');
-        button.id = id + '_button';
-        button.innerHTML = 'Image ' + (i + 1);
-        container.appendChild(button);
-        
-        let isRed = (localStorage.getItem(id + '_state') !== 'green');
-        if (!isRed) {
+      let container = document.createElement('div');
+      container.classList.add('container');
+      document.body.appendChild(container);
+      
+      let iframe = document.createElement('iframe');
+      iframe.id = id;
+      iframe.src = `../src/standalone/pannellum.htm?panorama=${panoramaImage}&preview=${previewImage}`;
+      iframe.allowFullscreen = true;
+      container.appendChild(iframe);
+      
+      let button = document.createElement('button');
+      button.id = id + '_button';
+      button.innerHTML = 'Image ' + (i + 1);
+      container.appendChild(button);
+      
+      let isRed = (localStorage.getItem(id + '_state') !== 'green');
+      if (!isRed) {
+        iframe.style.border = '2px solid green';
+        button.style.backgroundColor = 'green';
+      }
+      
+      button.addEventListener('click', function() {
+        if (isRed) {
           iframe.style.border = '2px solid green';
           button.style.backgroundColor = 'green';
+          localStorage.setItem(id + '_state', 'green');
+        } else {
+          iframe.style.border = '2px solid red';
+          button.style.backgroundColor = 'red';
+          localStorage.setItem(id + '_state', 'red');
         }
-        
-        button.addEventListener('click', function() {
-          if (isRed) {
-            iframe.style.border = '2px solid green';
-            button.style.backgroundColor = 'green';
-            localStorage.setItem(id + '_state', 'green');
-          } else {
-            iframe.style.border = '2px solid red';
-            button.style.backgroundColor = 'red';
-            localStorage.setItem(id + '_state', 'red');
-          }
-          isRed = !isRed;
-        });
-      }
+        isRed = !isRed;
+      });
     }
-// create buttons for navigating between pages
-let page1Button = document.createElement('button');
-page1Button.classList.add('page');
-page1Button.innerHTML = 'Page 1';
-page1Button.addEventListener('click', function() {
-  document.getElementById('page_1').style.display = 'flex';
-  document.getElementById('page_2').style.display = 'none';
-});
-
-let page2Button = document.createElement('button');
-page2Button.classList.add('page');
-page2Button.innerHTML = 'Page 2';
-page2Button.addEventListener('click', function() {
-  document.getElementById('page_1').style.display = 'none';
-  document.getElementById('page_2').style.display = 'flex';
-});
-
-let pageButtonsContainer = document.createElement('div');
-pageButtonsContainer.classList.add('page-buttons');
-document.body.appendChild(pageButtonsContainer);
-pageButtonsContainer.appendChild(page1Button);
-pageButtonsContainer.appendChild(page2Button);
-  
-// show the first page by default
-document.getElementById('page_1').style.display = 'flex';
-document.getElementById('page_2').style.display = 'none';
-      </script>
+  </script>
 </body>
-
-
-
 </html>
