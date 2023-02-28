@@ -1,3 +1,9 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>pannellum embed example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
 <body style="background-image: url(../../selected/crop/crop_0001.jpg); background-size: 2048px 2048px;">
   <style>
     .container {
@@ -25,7 +31,7 @@
     // create a loop for each page
     for (let page = 1; page <= 2; page++) {
       let start = (page - 1) * 50 + 1;
-      let end = start + 49;
+      let end = page * 50;
       
       // create a container for each page
       let pageContainer = document.createElement('div');
@@ -73,5 +79,23 @@
         });
       }
     }
+    
+    // create buttons for navigating between pages
+    let page1Button = document.createElement('button');
+    page1Button.innerHTML = 'Page 1';
+    page1Button.addEventListener('click', function() {
+      document.getElementById('page_1').style.display = 'flex';
+      document.getElementById('page_2').style.display = 'none';
+    });
+    document.body.appendChild(page1Button);
+    
+    let page2Button = document.createElement('button');
+    page2Button.innerHTML = 'Page 2';
+    page2Button.addEventListener('click', function() {
+      document.getElementById('page_1').style.display = 'none';
+      document.getElementById('page_2').style.display = 'flex';
+    });
+    document.body.appendChild(page2Button);
   </script>
 </body>
+</html>
