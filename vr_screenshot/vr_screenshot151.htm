@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>pannellum embed example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body style="background-image: url(../../selected/crop/crop_0001.jpg); background-size: 2048px 2048px;">
+
+  <!-- Add buttons for each range of images -->
+  <div>
+    <button2 onclick="window.location.href='vr_screenshot.htm'">1-50</button2>
+    <button2 onclick="window.location.href='vr_screenshot51.htm'">51-100</button2>
+    <button2 onclick="window.location.href='vr_screenshot101.htm'">101-150</button2>
+    <button2 onclick="window.location.href='vr_screenshot151.htm'">151-200</button2>
+    <button2 onclick="window.location.href='vr_screenshot201.htm'">201-250</button2>
+    <button2 onclick="window.location.href='vr_screenshot251.htm'">251-300</button2>
+    <button2 onclick="window.location.href='vr_screenshot301.htm'">301-350</button2> 
+    <button2 onclick="window.location.href='vr_screenshot351.htm'">351-400</button2>
+  </div>
+
+  <style>
+    .container {
+      display: flex;
+      width: 100%;
+      height: 52vh;
+      justify-content: center;
+      align-items: center;
+    }
+
+    iframe {
+      width: 512px;
+      height: 512px;
+      border: 2px solid red;
+    }
+
+    button {
+      width: 40px;
+      height: 516px;
+      background-color: red;
+    }
+    button2 {
+      width: 40px;
+      height: 40px;
+      background-color: red;
+    }
+  </style>
+
+  <script>
+    for (let i = 51; i <= 100; i++) {
+      let panoramaImage = '../../selected/' + ('0000' + i).slice(-4) + '.jpg';
+      let previewImage = '../../selected/crop/' + 'crop_' + ('0000' + i).slice(-4) + '.jpg';
+      let id = 'preview_' + i;
+
+      let container = document.createElement('div');
+      container.classList.add('container');
+      document.body.appendChild(container);
+      
+      let iframe = document.createElement('iframe');
+      iframe.id = id;
+      iframe.src = `../src/standalone/pannellum.htm?panorama=${panoramaImage}&preview=${previewImage}`;
+      iframe.allowFullscreen = true;
+      container.appendChild(iframe);
+      
+      let button = document.createElement('button');
+      button.id = id + '_button';
+      button.innerHTML = 'Image ' + (i + 1);
+      container.appendChild(button);
+      
+      let isRed = (localStorage.getItem(id + '_state') !== 'green');
+      if (!isRed) {
+        iframe.style.border = '2px solid green';
+        button.style.backgroundColor = 'green';
+      }
+      
+      button.addEventListener('click', function() {
+        if (isRed) {
+          iframe.style.border = '2px solid green';
+          button.style.backgroundColor = 'green';
+          localStorage.setItem(id + '_state', 'green');
+        } else {
+          iframe.style.border = '2px solid red';
+          button.style.backgroundColor = 'red';
+          localStorage.setItem(id + '_state', 'red');
+        }
+        isRed = !isRed;
+      });
+    }
+  </script>
+  <div>
+    <button2 onclick="window.location.href='vr_screenshot.htm'">1-50</button2>
+    <button2 onclick="window.location.href='vr_screenshot51.htm'">51-100</button2>
+    <button2 onclick="window.location.href='vr_screenshot101.htm'">101-150</button2>
+    <button2 onclick="window.location.href='vr_screenshot151.htm'">151-200</button2>
+    <button2 onclick="window.location.href='vr_screenshot201.htm'">201-250</button2>
+    <button2 onclick="window.location.href='vr_screenshot251.htm'">251-300</button2>
+    <button2 onclick="window.location.href='vr_screenshot301.htm'">301-350</button2> 
+    <button2 onclick="window.location.href='vr_screenshot351.htm'">351-400</button2>
+  </div>
+</body>
+</html>
