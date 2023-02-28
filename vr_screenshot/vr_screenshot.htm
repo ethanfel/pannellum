@@ -6,50 +6,19 @@
 </head>
 <body style="background-image: url(../../selected/crop/crop_0001.jpg); background-size: 2048px 2048px;">
 
-  <!-- Add buttons for each range of images -->
-  <div>
-    <button2 onclick="window.location.href='vr_screenshot.htm'">1-50</button2>
-    <button2 onclick="window.location.href='vr_screenshot51.htm'">51-100</button2>
-    <button2 onclick="window.location.href='vr_screenshot101.htm'">101-150</button2>
-    <button2 onclick="window.location.href='vr_screenshot151.htm'">151-200</button2>
-    <button2 onclick="window.location.href='vr_screenshot201.htm'">201-250</button2>
-    <button2 onclick="window.location.href='vr_screenshot251.htm'">251-300</button2>
-    <button2 onclick="window.location.href='vr_screenshot301.htm'">301-350</button2> 
-    <button2 onclick="window.location.href='vr_screenshot351.htm'">351-400</button2>
-  </div>
-
-  <style>
-    .container {
-      display: flex;
-      width: 100%;
-      height: 52vh;
-      justify-content: center;
-      align-items: center;
-    }
-
-    iframe {
-      width: 512px;
-      height: 512px;
-      border: 2px solid red;
-    }
-
-    button {
-      width: 40px;
-      height: 516px;
-      background-color: red;
-    }
-     button2 {
-      width: 40px;
-      height: 40px;
-      background-color: red;
-    }
-  </style>
-
+ <body>
   <script>
-    for (let i = 1; i <= 50; i++) {
-      let panoramaImage = '../../selected/' + ('0000' + i).slice(-4) + '.jpg';
-      let previewImage = '../../selected/crop/' + 'crop_' + ('0000' + i).slice(-4) + '.jpg';
-      let id = 'preview_' + i;
+    // Prompt the user for the value of i
+    let i = prompt("Enter a value for i:");
+
+    // Convert i to a number
+    i = parseInt(i);
+
+    // Create a loop to display i+50 images
+    for (let j = i; j < i+50; j++) {
+      let panoramaImage = `../../selected/${('0000' + j).slice(-4)}.jpg`;
+      let previewImage = `../../selected/crop/crop_${('0000' + j).slice(-4)}.jpg`;
+      let id = `preview_${j}`;
 
       let container = document.createElement('div');
       container.classList.add('container');
@@ -63,7 +32,7 @@
       
       let button = document.createElement('button');
       button.id = id + '_button';
-      button.innerHTML = 'Image ' + (i + 1);
+      button.innerHTML = `Image ${j+1}`;
       container.appendChild(button);
       
       let isRed = (localStorage.getItem(id + '_state') !== 'green');
@@ -86,15 +55,6 @@
       });
     }
   </script>
-  <div>
-    <button2 onclick="window.location.href='vr_screenshot.htm'">1-50</button2>
-    <button2 onclick="window.location.href='vr_screenshot51.htm'">51-100</button2>
-    <button2 onclick="window.location.href='vr_screenshot101.htm'">101-150</button2>
-    <button2 onclick="window.location.href='vr_screenshot151.htm'">151-200</button2>
-    <button2 onclick="window.location.href='vr_screenshot201.htm'">201-250</button2>
-    <button2 onclick="window.location.href='vr_screenshot251.htm'">251-300</button2>
-    <button2 onclick="window.location.href='vr_screenshot301.htm'">301-350</button2> 
-    <button2 onclick="window.location.href='vr_screenshot351.htm'">351-400</button2>
-  </div>
 </body>
+
 </html>
