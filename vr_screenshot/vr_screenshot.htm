@@ -7,6 +7,30 @@
   
   #container {
     margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    grid-gap: 10px;
+  }
+
+  .container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  iframe {
+    width: 512px;
+    height: 512px;
+    border: 2px solid red;
+  }
+
+  button {
+    width: 40px;
+    height: 512px;
+    background-color: red;
   }
 </style>
 
@@ -48,6 +72,7 @@
         let button = document.createElement('button');
         button.id = id + '_button';
         button.innerHTML = `Image ${i+1}`;
+        button.style.height = "512px";
         div.appendChild(button);
         
         let isRed = (localStorage.getItem(id + '_state') !== 'green');
