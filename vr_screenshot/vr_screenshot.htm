@@ -1,6 +1,12 @@
 <style>
   body {
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #container {
+    margin-top: 20px;
   }
 </style>
 
@@ -11,15 +17,16 @@
     <button id="submit">Submit</button>
   </div>
   
+  <div id="container"></div>
+  
   <script>
     let startInput = document.getElementById("start");
     let submitButton = document.getElementById("submit");
+    let container = document.getElementById("container");
 
     submitButton.addEventListener("click", function() {
       // Clear previously displayed images
-      while (document.body.firstChild) {
-        document.body.removeChild(document.body.firstChild);
-      }
+      container.innerHTML = "";
 
       let start = parseInt(startInput.value);
       
@@ -28,20 +35,20 @@
         let previewImage = `../../selected/crop/crop_${('0000' + i).slice(-4)}.jpg`;
         let id = `preview_${i}`;
 
-        let container = document.createElement('div');
-        container.classList.add('container');
-        document.body.appendChild(container);
+        let div = document.createElement('div');
+        div.classList.add('container');
+        container.appendChild(div);
         
         let iframe = document.createElement('iframe');
         iframe.id = id;
         iframe.src = `../src/standalone/pannellum.htm?panorama=${panoramaImage}&preview=${previewImage}`;
         iframe.allowFullscreen = true;
-        container.appendChild(iframe);
+        div.appendChild(iframe);
         
         let button = document.createElement('button');
         button.id = id + '_button';
         button.innerHTML = `Image ${i+1}`;
-        container.appendChild(button);
+        div.appendChild(button);
         
         let isRed = (localStorage.getItem(id + '_state') !== 'green');
         if (!isRed) {
@@ -65,4 +72,3 @@
     });
   </script>
 </body>
-
