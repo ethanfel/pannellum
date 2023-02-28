@@ -1,3 +1,10 @@
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+  }
+</style>
+
 <body>
   <div>
     <label for="start">Starting Image Number:</label>
@@ -10,6 +17,11 @@
     let submitButton = document.getElementById("submit");
 
     submitButton.addEventListener("click", function() {
+      // Clear previously displayed images
+      while (document.body.firstChild) {
+        document.body.removeChild(document.body.firstChild);
+      }
+
       let start = parseInt(startInput.value);
       
       for (let i = start; i < start + 50; i++) {
@@ -54,3 +66,4 @@
     });
   </script>
 </body>
+
