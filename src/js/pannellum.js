@@ -83,7 +83,7 @@ var defaultConfig = {
     minYaw: -180,
     maxYaw: 180,
     roll: 0,
-    haov: 180,
+    haov: 360,
     vaov: 180,
     vOffset: 0,
     autoRotate: false,
