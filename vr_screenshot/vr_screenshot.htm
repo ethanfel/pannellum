@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>pannellum embed example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body style="background-image: url(kitchen.png); background-size: 1920px 1080px;">
+  <style>
+    .container {
+      display: flex;
+      width: 100%;
+      height: 52vh;
+      justify-content: center;
+      align-items: center;
+    }
+
+    iframe {
+      width: 512px;
+      height: 512px;
+      border: 2px solid red;
+    }
+
+    button {
+      width: 40px;
+      height: 516px;
+      background-color: red;
+    }
+  </style>
+
+  <script>
+    for (let i = 0; i <= 74; i++) {
+      let panoramaImage = '../../selected/png/' + ('0000' + i).slice(-4) + '.png';
+      let previewImage = '../../selected/jpg/' + ('0000' + i).slice(-4) + '.jpg';
+      let id = 'preview_' + i;
+
+      let container = document.createElement('div');
+      container.classList.add('container');
+      document.body.appendChild(container);
+      
+      let iframe = document.createElement('iframe');
+      iframe.id = id;
+      iframe.src = `../src/standalone/pannellum.htm?panorama=${panoramaImage}&preview=${previewImage}`;
+      iframe.allowFullscreen = true;
+      container.appendChild(iframe);
+      
+      let button = document.createElement('button');
+      button.id = id + '_button';
+      button.innerHTML = 'Image ' + (i + 1);
+      container.appendChild(button);
+      
+      let isRed = (localStorage.getItem(id + '_state') !== 'green');
+      if (!isRed) {
+        iframe.style.border = '2px solid green';
+        button.style.backgroundColor = 'green';
+      }
+      
+      button.addEventListener('click', function() {
+        if (isRed) {
+          iframe.style.border = '2px solid green';
+          button.style.backgroundColor = 'green';
+          localStorage.setItem(id + '_state', 'green');
+        } else {
+          iframe.style.border = '2px solid red';
+          button.style.backgroundColor = 'red';
+          localStorage.setItem(id + '_state', 'red');
+        }
+        isRed = !isRed;
+      });
+    }
+  </script>
+</body>
+
+
+
+</html>
+
