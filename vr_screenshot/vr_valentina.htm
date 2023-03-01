@@ -77,7 +77,7 @@
       let start = parseInt(startInput.value);
       
       for (let i = start; i < start + 50; i++) {
-        let panoramaImage = `../../selected/${('0000' + i).slice(-4)}.jpg`;
+        let panoramaImage = `../../selected/crop/crop_${('0000' + i).slice(-4)}.jpg`;
         let previewImage = `../../selected/crop/crop_${('0000' + i).slice(-4)}.jpg`;
         let id = `preview_${i}`;
 
