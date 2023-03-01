@@ -72,10 +72,10 @@ var config,
     destroyed = false;
 
 var defaultConfig = {
-    hfov: 50,
+    hfov: 180,
     minHfov: 50,
     multiResMinHfov: false,
-    maxHfov: 120,
+    maxHfov: 180,
     pitch: -14,
     minPitch: undefined,
     maxPitch: undefined,
