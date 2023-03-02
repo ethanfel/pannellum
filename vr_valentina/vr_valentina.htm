@@ -96,8 +96,10 @@
         button.innerHTML = `Image ${i+1}`;
         button.style.height = "512px";
         div.appendChild(button);
+
+        let stateKey = iframe.dataset.filename + '_state';
         
-        let isRed = (localStorage.getItem(id + '_state') !== 'green');
+        let isRed = (localStorage.getItem(stateKey) !== 'green');
         if (!isRed) {
           iframe.style.border = '2px solid green';
           button.style.backgroundColor = 'green';
@@ -107,11 +109,11 @@
           if (isRed) {
             iframe.style.border = '2px solid green';
             button.style.backgroundColor = 'green';
-            localStorage.setItem(id + '_state', 'green');
+            localStorage.setItem(stateKey, 'green');
           } else {
             iframe.style.border = '2px solid red';
             button.style.backgroundColor = 'red';
-            localStorage.setItem(id + '_state', 'red');
+            localStorage.setItem(stateKey, 'red');
           }
           isRed = !isRed;
         });
@@ -119,6 +121,4 @@
     });
   </script>
 </body>
-
 </html>
-
