@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>pannellum valentina</title>
+    <title>pannellum embed example</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body style="background-image: url(../../selected/crop/crop_0001.jpg); background-size: 2048px 2048px;">
@@ -96,10 +96,8 @@
         button.innerHTML = `Image ${i+1}`;
         button.style.height = "512px";
         div.appendChild(button);
-
-        let stateKey = iframe.dataset.filename + '_state';
         
-        let isRed = (localStorage.getItem(stateKey) !== 'green');
+        let isRed = (localStorage.getItem(id + '_state') !== 'green');
         if (!isRed) {
           iframe.style.border = '2px solid green';
           button.style.backgroundColor = 'green';
@@ -109,11 +107,11 @@
           if (isRed) {
             iframe.style.border = '2px solid green';
             button.style.backgroundColor = 'green';
-            localStorage.setItem(stateKey, 'green');
+            localStorage.setItem(id + '_state', 'green');
           } else {
             iframe.style.border = '2px solid red';
             button.style.backgroundColor = 'red';
-            localStorage.setItem(stateKey, 'red');
+            localStorage.setItem(id + '_state', 'red');
           }
           isRed = !isRed;
         });
@@ -121,4 +119,5 @@
     });
   </script>
 </body>
+
 </html>
