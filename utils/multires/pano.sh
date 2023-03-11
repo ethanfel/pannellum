@@ -8,5 +8,3 @@ for file in *.jpg; do
   sudo docker run -it -v $PWD:/data generate-panorama --png -f 1080 -H 180 -V 180 -F 120 --output /data/output/$output /data/files/$file
 done
 
-# Remove the Docker container with the ancestor image named 'generate-panorama'
-sudo docker rm $(sudo docker ps -a -q --filter ancestor=generate-panorama --format="{{.ID}}")
